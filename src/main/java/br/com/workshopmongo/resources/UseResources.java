@@ -13,10 +13,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import br.com.workshopmongo.domain.Post;
 import br.com.workshopmongo.domain.User;
 import br.com.workshopmongo.domain.dto.UserDto;
 import br.com.workshopmongo.service.UserService;
@@ -65,6 +65,13 @@ public class UseResources {
 		obj.setId(id);
 		obj = userService.update(obj);
 		return ResponseEntity.noContent().build();
+
+	}
+
+	@GetMapping(value = "/{id}/posts")
+	public ResponseEntity<List<Post>> findPosts(@PathVariable String id) {
+		User obj = userService.findById(id);
+		return ResponseEntity.ok().body(obj.getPosts());
 
 	}
 
